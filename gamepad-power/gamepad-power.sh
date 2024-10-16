@@ -2,12 +2,12 @@
 # Daemon that monitors power of wireless gamepads.
 # Needs upower or sysfs (choose implementation in source directives below).
 
-# TODO device name should be included in notifications
-# TODO i18n
-TEXT_FULLY_CHARGED="Battery charged"
-TEXT_CHARGING="Battery discharging: %d%%"
-TEXT_DISCHARGING="Battery discharging: %d%%"
-TEXT_LOW_BATTERY="Battery low: %d%%"
+# charge status less or equal than this value will be notified as low battery
+LOW_BATTERY_THRESHOLD=15
+
+# for gettext
+TEXTDOMAIN=gamepad-power
+TEXTDOMAINDIR=/usr/local/share/locale
 
 set -eo pipefail
 declare -A LAST_STATUS
@@ -44,22 +44,22 @@ get_battery_status() {
 }
 
 notify_fully_charged() {
-  notify "$TEXT_FULLY_CHARGED" "$1"
+  notify $"Notification: Battery charged" "$1"
 }
 
 notify_charging() {
-  # shellcheck disable=SC2059
-  notify "$(printf "$TEXT_CHARGING" "$2")" "$1"
+  # shellcheck disable=SC2182
+  notify "$(printf $"Notification: Battery charging" "$2")" "$1"
 }
 
 notify_discharging() {
-  # shellcheck disable=SC2059
-  notify "$(printf "$TEXT_DISCHARGING" "$2")" "$1"
+  # shellcheck disable=SC2182
+  notify "$(printf $"Notification: Battery discharging" "$2")" "$1"
 }
 
 notify_low_battery() {
-  # shellcheck disable=SC2059
-  notify "$(printf "$TEXT_LOW_BATTERY" "$2")" "$1" "battery-caution"
+  # shellcheck disable=SC2182
+  notify "$(printf $"Notification: Battery low" "$2")" "$1" "battery-caution"
 }
 
 check_prereqs
@@ -94,13 +94,13 @@ while read -r line; do
 
   if [[ "$battery_status" == "100" ]]; then
     notify_fully_charged "$device_name"
-  elif (( battery_status > 10 )); then
+  elif (( battery_status > LOW_BATTERY_THRESHOLD )); then
     if [[ "$charging_state" == "discharging" ]]; then
       notify_discharging "$device_name" "$battery_status"
     else
       notify_charging "$device_name" "$battery_status"
     fi
-  elif (( battery_status <= 10 )); then
+  elif (( battery_status <= LOW_BATTERY_THRESHOLD )); then
     if [[ "$charging_state" == "discharging" ]]; then
       notify_low_battery "$device_name" "$battery_status"
     else

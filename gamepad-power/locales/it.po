@@ -1,0 +1,11 @@
+msgid "Notification: Battery charged"
+msgstr "Batteria carica"
+
+msgid "Notification: Battery charging"
+msgstr "Batteria in caricamento: %d%%"
+
+msgid "Notification: Battery discharging"
+msgstr "Batteria in scaricamento: %d%%"
+
+msgid "Notification: Battery low"
+msgstr "Batteria scarica: %d%%"
