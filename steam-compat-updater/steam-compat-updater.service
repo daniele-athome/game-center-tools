@@ -1,0 +1,11 @@
+[Unit]
+Description=Steam compatibility tools updater
+
+[Service]
+ExecStartPre=/bin/sleep 5
+ExecStart=/usr/local/bin/steam-compat-updater
+Type=oneshot
+Restart=no
+
+[Install]
+WantedBy=graphical-session.target

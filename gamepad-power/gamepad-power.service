@@ -1,0 +1,14 @@
+[Unit]
+Description=Gamepad power monitor
+# FIXME systems services
+#Wants=upower.service
+#After=upower.service
+
+[Service]
+ExecStartPre=/bin/sleep 5
+ExecStart=/usr/local/bin/gamepad-power
+Type=simple
+Restart=on-failure
+
+[Install]
+WantedBy=graphical-session.target
