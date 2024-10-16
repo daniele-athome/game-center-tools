@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Updater for Steam compatibility tools
 
-set -euxo pipefail
+set -euo pipefail
 
 COMPAT_PATH="$HOME/.local/share/Steam/compatibilitytools.d"
 
@@ -29,12 +29,14 @@ die() {
 
 # TODO download all missing releases between latest released and latest installed
 update_ge_proton() {
+  ge_repo_url="https://github.com/GloriousEggroll/proton-ge-custom"
+
   # credit goes to https://www.reddit.com/r/linux_gaming/comments/1cf1vkk/i_made_a_little_script_to_update_protonge_to_use/
-  ge_latest_url="$(curl -Lsf -o /dev/null -w '%{url_effective}' https://github.com/GloriousEggroll/proton-ge-custom/releases/latest)"
+  ge_latest_url="$(curl -Lsf -o /dev/null -w '%{url_effective}' "$ge_repo_url/releases/latest")"
   ge_latest="${ge_latest_url##*/}"
 
   if [[ ! -d "$COMPAT_PATH/$ge_latest" ]]; then
-    ge_url_base="https://github.com/GloriousEggroll/proton-ge-custom/releases/download/$ge_latest/$ge_latest"
+    ge_url_base="$ge_repo_url/releases/download/$ge_latest/$ge_latest"
 
     curl -Lsf -o "$tempdir/${ge_latest}.tar.gz" "${ge_url_base}.tar.gz" || die "Unable to download latest GE-Proton release."
     curl -Lsf -o "$tempdir/${ge_latest}.sha512sum" "${ge_url_base}.sha512sum" || die "Unable to download latest GE-Proton release."
