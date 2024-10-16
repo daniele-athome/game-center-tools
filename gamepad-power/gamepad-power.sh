@@ -2,6 +2,7 @@
 # Daemon that monitors power of wireless gamepads.
 # Needs upower or sysfs (choose implementation in source directives below).
 
+# TODO device name should be included in notifications
 # TODO i18n
 TEXT_FULLY_CHARGED="Battery charged"
 TEXT_CHARGING="Battery discharging: %d%%"
