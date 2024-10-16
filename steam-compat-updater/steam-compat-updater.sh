@@ -27,6 +27,7 @@ die() {
   exit 1
 }
 
+# TODO avoid using github cli (which requires a token and thus an account), just use curl
 update_ge_proton() {
   # TODO download all missing releases between latest released and latest installed
   ge_latest="$(gh release -R GloriousEggroll/proton-ge-custom view --json tagName -q .tagName)"
