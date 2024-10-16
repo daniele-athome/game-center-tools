@@ -5,6 +5,16 @@ set -euo pipefail
 
 COMPAT_PATH="$HOME/.local/share/Steam/compatibilitytools.d"
 
+notify() {
+  # critical notifications should stick until manual dismissal
+  notify-send -i "${3:-steam}" -u "${4:-critical}" "${2:-Steam compat updater}" "$1"
+}
+
+die() {
+  notify "$@"
+  exit 1
+}
+
 # ensure Steam compat tools directory exists
 # TODO i18n
 mkdir -p "$COMPAT_PATH" || die "Unable to create Steam compat tools directory."
@@ -16,16 +26,6 @@ cleanup() {
 }
 
 trap cleanup EXIT
-
-notify() {
-  # critical notifications should stick until manual dismissal
-  notify-send -i "${3:-steam}" -u "${4:-critical}" "${2:-Steam compat updater}" "$1"
-}
-
-die() {
-  notify "$@"
-  exit 1
-}
 
 # TODO download all missing releases between latest released and latest installed
 update_ge_proton() {
