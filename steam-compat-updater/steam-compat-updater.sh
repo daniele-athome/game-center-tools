@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Updater for Steam compatibility tools
 
-set -eo pipefail
+set -euxo pipefail
 
 COMPAT_PATH="$HOME/.local/share/Steam/compatibilitytools.d"
 
@@ -27,20 +27,24 @@ die() {
   exit 1
 }
 
-# TODO avoid using github cli (which requires a token and thus an account), just use curl
+# TODO download all missing releases between latest released and latest installed
 update_ge_proton() {
-  # TODO download all missing releases between latest released and latest installed
-  ge_latest="$(gh release -R GloriousEggroll/proton-ge-custom view --json tagName -q .tagName)"
+  # credit goes to https://www.reddit.com/r/linux_gaming/comments/1cf1vkk/i_made_a_little_script_to_update_protonge_to_use/
+  ge_latest_url="$(curl -Lsf -o /dev/null -w '%{url_effective}' https://github.com/GloriousEggroll/proton-ge-custom/releases/latest)"
+  ge_latest="${ge_latest_url##*/}"
 
   if [[ ! -d "$COMPAT_PATH/$ge_latest" ]]; then
-    # TODO i18n
-    gh release -R GloriousEggroll/proton-ge-custom download "$ge_latest" --dir "$tempdir" || die "Unable to download latest GE-Proton release."
+    ge_url_base="https://github.com/GloriousEggroll/proton-ge-custom/releases/download/$ge_latest/$ge_latest"
+
+    curl -Lsf -o "$tempdir/${ge_latest}.tar.gz" "${ge_url_base}.tar.gz" || die "Unable to download latest GE-Proton release."
+    curl -Lsf -o "$tempdir/${ge_latest}.sha512sum" "${ge_url_base}.sha512sum" || die "Unable to download latest GE-Proton release."
+
     # TODO i18n
     (cd "$tempdir" && sha512sum -c "$tempdir/${ge_latest}.sha512sum") || die "GE-Proton package verification failed."
     # TODO i18n
     tar -C "$COMPAT_PATH" -xzf "$tempdir/${ge_latest}.tar.gz" || die "GE-Proton installation failed."
     # TODO i18n
-    notify "GE-Proton updated to version ${ge_latest}."
+    notify "Updated to version ${ge_latest}."
   fi
 }
 
