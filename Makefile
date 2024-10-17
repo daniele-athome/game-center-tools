@@ -1,9 +1,10 @@
 .PHONY: all install uninstall
 
-all:
-	@echo "Use 'make install' or 'make uninstall'."
-
 # TODO parametrize subdirectories
+
+all:
+	make -C gamepad-power all
+	make -C steam-compat-updater all
 
 install:
 	make -C gamepad-power install
