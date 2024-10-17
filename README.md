@@ -3,13 +3,13 @@
 This repository contains some opinionated scripts that I wrote for my specific purposes:
 
 * headless Linux gaming system streamed to my TV set via [Sunshine](https://app.lizardbyte.dev/Sunshine/)/[Moonlight](https://moonlight-stream.org/)
-* no keyboard, only a Bluetooth gamepad
+* no keyboard, only a Bluetooth gamepad connected directly to the gaming system
 * XFCE desktop environment
 * Steam Big Picture as main UI
 
 ## Gamepad battery notifications (`gamepad-power`)
 
-Dependencies: `udev`, mounted sysfs on `/sys`
+Dependencies: `notify-send`, `udev`, mounted sysfs on `/sys`
 
 A little systemd service that monitors battery-powered gamepads and sends notifications when the battery charge changes.
 Notifications are sent using `notify-send` which must be installed on the system. Battery status detection requires a
@@ -21,8 +21,9 @@ Run `make && sudo make install` to install the shell scripts and a systemd unit 
 systemctl --user enable --now gamepad-power.service
 ```
 
-Note that you need a desktop environment that supports systemd and `graphical-session.target` (XFCE is **not**
-one of them). You can also start `/usr/local/bin/gamepad-power` in whatever way you prefer.
+Note that in order to start the service automatically at login time you need a desktop environment that supports systemd
+and `graphical-session.target` (XFCE is **not** one of them, I had to make it work in some other way). You can also
+start `/usr/local/bin/gamepad-power` in whatever way you prefer.
 
 ## Steam compatibility tools updater (`steam-compat-updater`)
 
@@ -40,6 +41,7 @@ Run `make && sudo make install` to install the shell script and a systemd unit f
 systemctl --user enable --now steam-compat-updater.service
 ```
 
-Note that you need a desktop environment that supports systemd and `graphical-session.target` (XFCE is not one of them).
-You can also start `/usr/local/bin/steam-compat-updater` in whatever way you prefer. This script is not a daemon and
-just runs once, does the upgrades, then exits - it is intended to be run once at system startup.
+Note that in order to start the service automatically at login time you need a desktop environment that supports systemd
+and `graphical-session.target` (XFCE is **not** one of them, I had to make it work in some other way). You can also
+start `/usr/local/bin/steam-compat-updater` in whatever way you prefer. This script is not a daemon and just runs once,
+does the upgrades, then exits - it is intended to be run once at system startup.
