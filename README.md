@@ -15,7 +15,7 @@ A little systemd service that monitors battery-powered gamepads and sends notifi
 Notifications are sent using `notify-send` which must be installed on the system. Battery status detection requires a
 mounted sysfs in `/sys` and `udev` running.
 
-Run `sudo make install` to install the shell scripts and a systemd unit for the user daemon. After that, enable it:
+Run `make && sudo make install` to install the shell scripts and a systemd unit for the user daemon. After that, enable it:
 
 ```shell
 systemctl --user enable --now gamepad-power.service
@@ -34,7 +34,7 @@ notify upgrades or errors. If no upgrades are found, no notifications are displa
 
 > Please note that if Steam was running during an upgrade, it needs to be restarted to detect the upgrade.
 
-Run `sudo make install` to install the shell script and a systemd unit for the user daemon. After that, enable it:
+Run `make && sudo make install` to install the shell script and a systemd unit for the user daemon. After that, enable it:
 
 ```shell
 systemctl --user enable --now steam-compat-updater.service
