@@ -6,7 +6,9 @@
 LOW_BATTERY_THRESHOLD=15
 
 # for gettext
+# shellcheck disable=SC2034
 TEXTDOMAIN=gamepad-power
+# shellcheck disable=SC2034
 TEXTDOMAINDIR=/usr/local/share/locale
 
 set -eo pipefail
