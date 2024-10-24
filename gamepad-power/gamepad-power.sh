@@ -85,14 +85,15 @@ while read -r line; do
   device_name="$(echo "$device_info" | get_device_name)"
   battery_status="$(echo "$device_info" | get_battery_status)"
   charging_state="$(echo "$device_info" | get_charging_status || echo "$device_info" | get_charging_status_sysfs)"
+  device_status="$charging_state:$battery_status"
   #echo "<$device_name>: <$battery_status> / <$charging_state>"
 
-  if [[ "${LAST_STATUS["$device"]}" == "$charging_state:$battery_status" ]]; then
+  if [[ "${LAST_STATUS["$device"]}" == "$device_status" ]]; then
     # already notified
     continue;
   fi
 
-  LAST_STATUS["$device"]="$charging_state:$battery_status"
+  LAST_STATUS["$device"]="$device_status"
 
   if [[ "$battery_status" == "100" ]]; then
     notify_fully_charged "$device_name"
