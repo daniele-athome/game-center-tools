@@ -16,5 +16,6 @@ install:
 uninstall:
 	rm -f /etc/modules-load.d/usbip.conf
 	rm -f /etc/systemd/system/usbipd.service
+	rm -f /etc/systemd/system/usbip-bind@.service
 	# systemd will realize at next reboot
 	rm -fr /etc/usbip/bind-devices/
