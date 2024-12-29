@@ -14,7 +14,7 @@ install:
 	install -m 0644 usbip-bind@.service /etc/systemd/system/usbip-bind@.service
 	install -Dm 0644 -t /etc/usbip/bind-devices/ bind-devices/*
 	systemctl daemon-reload
-	systemctl enable --now usbipd.service
+	#systemctl enable --now usbipd.service
 
 uninstall:
 	rm -f /etc/modules-load.d/usbip.conf
