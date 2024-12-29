@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Moonlight USB/IP
+Comment=Stream games and other applications from another PC running Sunshine or GeForce Experience
+Exec=moonlight-usbip
+Icon=moonlight
+Terminal=false
+Type=Application
+Categories=Qt;Game;
+Keywords=nvidia;gamestream;stream;sunshine;remote play;
