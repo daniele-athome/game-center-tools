@@ -1,0 +1,16 @@
+[Unit]
+Description=USB-IP Binding for device %I
+After=network-online.target usbipd.service
+Wants=network-online.target
+Requires=usbipd.service
+
+[Service]
+Type=simple
+EnvironmentFile=/etc/usbip/bind-devices/%i.conf
+ExecStart=/bin/sh -c "/usr/sbin/usbip bind -b $(/usr/sbin/usbip list -p -l | grep '#usbid=${USBIP_DEVICE}#' | cut '-d#' -f1 | cut '-d=' -f2)"
+RemainAfterExit=yes
+ExecStop=/bin/sh -c "/usr/sbin/usbip unbind -b $(/usr/sbin/usbip list -p -l | grep '#usbid=${USBIP_DEVICE}#' | cut '-d#' -f1 | cut '-d=' -f2)"
+Restart=no
+
+[Install]
+WantedBy=multi-user.target

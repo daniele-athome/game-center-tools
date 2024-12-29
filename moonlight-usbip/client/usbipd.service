@@ -1,0 +1,11 @@
+[Unit]
+Description=USB/IP server
+After=network.target
+
+[Service]
+ExecStart=/usr/sbin/usbipd
+Type=simple
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
