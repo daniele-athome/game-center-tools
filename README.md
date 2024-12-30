@@ -49,7 +49,7 @@ does the upgrades, then exits - it is intended to be run once at system startup.
 
 ## Moonlight USB/IP integration
 
-Dependencies: `notify-send` (client only), `usbip`
+Dependencies: `notify-send` (client only), Polkit (client only), `usbip`
 
 This is a set of systemd units, configuration files and script that somewhat integrates Moonlight
 with [USB/IP](https://wiki.archlinux.org/title/USB/IP), which is basically a tool to "forward" USB devices through the network to another host. This has the
@@ -70,14 +70,13 @@ Configuration files exist for the DualShock 4 and DualSense controllers.
 Run `make && sudo make install` to install everything. After that, you can start Moonlight via the wrapper script
 `moonlight-usbip` or via application shortcut "Moonlight USB/IP".
 
-> TODO find a more suitable way to execute privileged commands, e.g. PolKit rule  
-> e.g. https://wiki.archlinux.org/title/Polkit#Allow_management_of_individual_systemd_units_by_regular_users
-
-The wrapper script will (using `sudo` so be sure to configure it without a password):
+The wrapper script will:
 
 * start the `usbip` daemon and try to bind both the DS4 and the DS5 (whatever it will find connected)
 * start Moonlight
 * stop `usbip` when Moonlight quits
+
+Privileged operations (e.g. start `usbip`) will use `systemctl` and should work out-of-the-box if Polkit is installed.
 
 ### On the gaming system (streaming server, e.g. Sunshine)
 

@@ -13,8 +13,9 @@ install:
 	install -m 0644 usbipd.service /etc/systemd/system/usbipd.service
 	install -m 0644 usbip-bind@.service /etc/systemd/system/usbip-bind@.service
 	install -Dm 0644 -t /etc/usbip/bind-devices/ bind-devices/*
+	install -m 0640 polkit.rules /etc/polkit-1/rules.d/10-usbip-gaming.rules
 	systemctl daemon-reload
-	#systemctl enable --now usbipd.service
+	systemctl restart polkit.service
 
 uninstall:
 	rm -f /etc/modules-load.d/usbip.conf
@@ -22,3 +23,5 @@ uninstall:
 	rm -f /etc/systemd/system/usbip-bind@.service
 	# systemd will realize at next reboot
 	rm -fr /etc/usbip/bind-devices/
+	rm -f /etc/polkit-1/rules.d/10-usbip-gaming.rules
+	systemctl restart polkit.service
