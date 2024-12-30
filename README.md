@@ -45,3 +45,53 @@ Note that in order to start the service automatically at login time you need a d
 and `graphical-session.target` (XFCE is **not** one of them, I had to make it work in some other way). You can also
 start `/usr/local/bin/steam-compat-updater` in whatever way you prefer. This script is not a daemon and just runs once,
 does the upgrades, then exits - it is intended to be run once at system startup.
+
+## Moonlight USB/IP integration
+
+Dependencies: `notify-send` (client only), `usbip`
+
+This is a set of systemd units, configuration files and script that somewhat integrates Moonlight
+with [USB/IP](https://wiki.archlinux.org/title/USB/IP), which is basically a tool to "forward" USB devices through the network to another host. This has the
+advantage that **games will see the controller as if it's attached directly to the gaming system** and will be able to
+use all its features - something that can't be done with the built-in Sunshine/Moonlight emulation.
+
+Heavily inspired by the USB/IP Arch wiki page, I tried to streamline the process as much as I could, automating almost
+everything. The idea is this:
+
+* connect a controller to your Moonlight system
+* start Moonlight via a wrapper script
+* start a service on the server (Sunshine) system to attach the controller
+
+### On the Moonlight system (streaming client)
+
+Configuration files exist for the DualShock 4 and DualSense controllers.
+
+Run `make && sudo make install` to install everything. After that, you can start Moonlight via the wrapper script
+`moonlight-usbip` or via application shortcut "Moonlight USB/IP".
+
+> TODO find a more suitable way to execute privileged commands, e.g. PolKit rule  
+> e.g. https://wiki.archlinux.org/title/Polkit#Allow_management_of_individual_systemd_units_by_regular_users
+
+The wrapper script will (using `sudo` so be sure to configure it without a password):
+
+* start the `usbip` daemon and try to bind both the DS4 and the DS5 (whatever it will find connected)
+* start Moonlight
+* stop `usbip` when Moonlight quits
+
+### On the gaming system (streaming server, e.g. Sunshine)
+
+Configure the host of your streaming client in all files inside `moonlight-usbip/server/remote-devices`: set the
+`USBIP_HOST` variable.
+
+Run `make && sudo make install` to install everything. Now for the manual part (**after starting Moonlight**):
+
+```shell
+systemctl start usbip@CONTROLLER.service
+```
+
+Replace `CONTROLLER` with:
+
+* `ds4` if you have a DualShock 4 controller
+* `ds5` if you have a DualSense controller
+
+> TODO find a way to automate this (it's really hard to automate this step without doing some sort of polling to the client host)
