@@ -1,7 +1,7 @@
 polkit.addRule(function(action, subject) {
     if (action.id == "org.freedesktop.systemd1.manage-units") {
         var unit = action.lookup("unit");
-        if (unit == "usbipd.service" or /usbip-bind@[a-z0-9-]+\.service/.test(unit)) {
+        if (unit == "usbipd.service" || /usbip-bind@[a-z0-9-]+\.service/.test(unit)) {
             var verb = action.lookup("verb");
             if (verb == "start" || verb == "stop" || verb == "restart") {
                 return polkit.Result.YES;
