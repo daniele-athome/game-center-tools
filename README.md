@@ -3,7 +3,8 @@
 This repository contains some opinionated scripts that I wrote for my specific purposes:
 
 * headless Linux gaming system streamed to my TV set via [Sunshine](https://app.lizardbyte.dev/Sunshine/)/[Moonlight](https://moonlight-stream.org/)
-* no keyboard, only a Bluetooth gamepad connected directly to the gaming system
+* no keyboard, only a Bluetooth gamepad connected directly to the gaming system OR a gamepad connected to the client and
+  forwarded via USB/IP
 * XFCE desktop environment
 * Steam Big Picture as main UI
 
