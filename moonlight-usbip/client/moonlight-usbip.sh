@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MOONLIGHT_BIN="$(which moonlight)"
+MOONLIGHT_BIN="$(which moonlight || which moonlight-qt)"
 USBIP_DEVICES_PATH="/etc/usbip/bind-devices"
 
 start_and_check() {
