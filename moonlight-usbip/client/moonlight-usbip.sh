@@ -14,7 +14,9 @@ start_and_check() {
 }
 
 notify() {
-  notify-send -i "${3:-moonlight}" -u "${4:-normal}" "${2:-Moonlight USB/IP}" "$1"
+  # fallback to journal
+  notify-send -i "${3:-moonlight}" -u "${4:-normal}" "${2:-Moonlight USB/IP}" "$1" 2>/dev/null ||
+    echo "$1" | systemd-cat -p warning
 }
 
 finish() {
