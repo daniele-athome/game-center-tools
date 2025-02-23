@@ -17,6 +17,14 @@ notify() {
   notify-send -i "${3:-moonlight}" -u "${4:-normal}" "${2:-Moonlight USB/IP}" "$1"
 }
 
+finish() {
+  systemctl stop usbipd.service
+
+  find "$USBIP_DEVICES_PATH" -type f -name '*.conf' | while read -r line; do
+    bind_name="$(basename "$line" .conf)"
+    systemctl stop "usbip-bind@$bind_name.service"
+  done
+}
 
 if ! start_and_check usbipd.service; then
   notify "Failed to start usbipd. Controllers will not work."
@@ -27,11 +35,6 @@ else
   done
 fi
 
+trap finish QUIT TERM EXIT
+
 "$MOONLIGHT_BIN" "$@"
-
-systemctl stop usbipd.service
-
-find "$USBIP_DEVICES_PATH" -type f -name '*.conf' | while read -r line; do
-  bind_name="$(basename "$line" .conf)"
-  systemctl stop "usbip-bind@$bind_name.service"
-done
