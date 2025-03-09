@@ -5,9 +5,9 @@ all:
 
 install:
 	# no way to do this with a xdg command
-	install -m 0644 moonlight.svg /usr/local/share/icons/hicolor/scalable/apps/moonlight
+	install -Dm 0644 moonlight.svg /usr/local/share/icons/hicolor/scalable/apps/moonlight
 	# no way to do this with a xdg command
-	install -m 0644 moonlight-usbip.desktop /usr/local/share/applications/moonlight-usbip.desktop
+	install -Dm 0644 moonlight-usbip.desktop /usr/local/share/applications/moonlight-usbip.desktop
 	install -m 0755 moonlight-usbip.sh /usr/local/bin/moonlight-usbip
 	install -m 0644 modules-load.conf /etc/modules-load.d/usbip.conf
 	install -m 0644 usbipd.service /etc/systemd/system/usbipd.service
