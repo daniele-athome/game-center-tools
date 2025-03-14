@@ -19,6 +19,7 @@ notify() {
     echo "$1" | systemd-cat -p warning
 }
 
+# shellcheck disable=SC2317
 finish() {
   systemctl stop usbipd.service
 
@@ -40,3 +41,8 @@ fi
 trap finish QUIT TERM EXIT
 
 "$MOONLIGHT_BIN" "$@"
+status="$?"
+if [[ "$status" != "0" ]]; then
+  notify "Moonlight exited with status $status"
+fi
+exit "$status"
