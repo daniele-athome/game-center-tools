@@ -83,7 +83,13 @@ Privileged operations (e.g. start `usbip`) will use `systemctl` and should work 
 Configure the host of your streaming client in all files inside `moonlight-usbip/server/remote-devices`: set the
 `USBIP_HOST` variable.
 
-Run `make && sudo make install` to install everything. Now for the manual part (**after starting Moonlight**):
+Run `make && sudo make install` to install everything.
+
+> [!NOTE]
+> The following command may be configured in Sunshine as preparation steps: the `start` command for the "Do" (mandatory), the `stop` command for the "Undo" (optional).
+> This way the system will be completely automated, as long as you connect the controller before starting Moonlight.
+
+Execute this command **after starting Moonlight**:
 
 ```shell
 systemctl start usbip@CONTROLLER.service
@@ -93,5 +99,3 @@ Replace `CONTROLLER` with:
 
 * `ds4` if you have a DualShock 4 controller
 * `ds5` if you have a DualSense controller
-
-> TODO find a way to automate this (it's really hard to automate this step without doing some sort of polling to the client host)
