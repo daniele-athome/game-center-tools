@@ -99,3 +99,5 @@ Replace `CONTROLLER` with:
 
 * `ds4` if you have a DualShock 4 controller
 * `ds5` if you have a DualSense controller
+
+Privileged operations (i.e. systemctl) should work out-of-the-box if Polkit is installed.
