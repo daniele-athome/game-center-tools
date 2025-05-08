@@ -56,6 +56,10 @@ with [USB/IP](https://wiki.archlinux.org/title/USB/IP), which is basically a too
 advantage that **games will see the controller as if it's attached directly to the gaming system** and will be able to
 use all its features - something that can't be done with the built-in Sunshine/Moonlight emulation.
 
+> [!NOTE]
+> This integration will make your controller work only for your gaming (Sunshine) host **but not in Moonlight GUI itself**.
+> This is because of USB/IP taking exclusive access to the controller. You must use another device to control the Moonlight GUI (mouse/keyboard).
+
 Heavily inspired by the USB/IP Arch wiki page, I tried to streamline the process as much as I could, automating almost
 everything. The idea is this:
 
