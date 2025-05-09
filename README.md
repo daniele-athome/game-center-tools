@@ -91,7 +91,8 @@ Run `make && sudo make install` to install everything.
 
 > [!NOTE]
 > The following command may be configured in Sunshine as preparation steps: the `start` command for the "Do" (mandatory), the `stop` command for the "Undo" (optional).
-> This way the system will be completely automated, as long as you connect the controller before starting Moonlight.
+> This way the system will be completely automated, as long as you connect the controller before starting Moonlight.  
+> **Anyway for the moment it is not recommended to set the "Undo" command because Proton can't handle controller reconnections due to a bug: https://github.com/ValveSoftware/Proton/issues/7952**
 
 Execute this command **after starting Moonlight**:
 
