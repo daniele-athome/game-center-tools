@@ -34,17 +34,18 @@ update_ge_proton() {
   # credit goes to https://www.reddit.com/r/linux_gaming/comments/1cf1vkk/i_made_a_little_script_to_update_protonge_to_use/
   ge_latest_url="$(curl -Lsf -o /dev/null -w '%{url_effective}' "$ge_repo_url/releases/latest")"
   ge_latest="${ge_latest_url##*/}"
+  ge_latest_filename="${ge_latest}-$(arch)"
 
   if [[ ! -d "$COMPAT_PATH/$ge_latest" ]]; then
-    ge_url_base="$ge_repo_url/releases/download/$ge_latest/$ge_latest"
+    ge_url_base="$ge_repo_url/releases/download/$ge_latest/${ge_latest_filename}"
 
-    curl -Lsf -o "$tempdir/${ge_latest}.tar.gz" "${ge_url_base}.tar.gz" || die "Unable to download latest GE-Proton release."
-    curl -Lsf -o "$tempdir/${ge_latest}.sha512sum" "${ge_url_base}.sha512sum" || die "Unable to download latest GE-Proton release."
+    curl -Lsf -o "$tempdir/${ge_latest_filename}.tar.gz" "${ge_url_base}.tar.gz" || die "Unable to download latest GE-Proton release."
+    curl -Lsf -o "$tempdir/${ge_latest_filename}.sha512sum" "${ge_url_base}.sha512sum" || die "Unable to download latest GE-Proton release."
 
     # TODO i18n
-    (cd "$tempdir" && sha512sum -c "$tempdir/${ge_latest}.sha512sum") || die "GE-Proton package verification failed."
+    (cd "$tempdir" && sha512sum -c "$tempdir/${ge_latest_filename}.sha512sum") || die "GE-Proton package verification failed."
     # TODO i18n
-    tar -C "$COMPAT_PATH" -xzf "$tempdir/${ge_latest}.tar.gz" || die "GE-Proton installation failed."
+    tar -C "$COMPAT_PATH" -xzf "$tempdir/${ge_latest_filename}.tar.gz" || die "GE-Proton installation failed."
     # TODO i18n
     notify "Updated to version ${ge_latest}."
   fi
