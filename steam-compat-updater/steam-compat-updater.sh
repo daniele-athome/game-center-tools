@@ -36,7 +36,7 @@ update_ge_proton() {
   ge_latest="${ge_latest_url##*/}"
   ge_latest_filename="${ge_latest}-$(arch)"
 
-  if [[ ! -d "$COMPAT_PATH/$ge_latest" ]]; then
+  if [[ ! -d "$COMPAT_PATH/$ge_latest_filename" ]]; then
     ge_url_base="$ge_repo_url/releases/download/$ge_latest/${ge_latest_filename}"
 
     curl -Lsf -o "$tempdir/${ge_latest_filename}.tar.gz" "${ge_url_base}.tar.gz" || die "Unable to download latest GE-Proton release."
