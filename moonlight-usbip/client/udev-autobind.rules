@@ -1,7 +1,9 @@
-# create any of these files to disable autobind
-ACTION=="add", SUBSYSTEM=="usb", TEST!="/etc/usbip/autobind-enabled", GOTO="usbip_end"
-ACTION=="add", SUBSYSTEM=="usb", TEST!="/run/usbip-autobind-enabled", GOTO="usbip_end"
-ACTION=="add", SUBSYSTEM=="usb", TEST!="/tmp/usbip-autobind-enabled", GOTO="usbip_end"
+# create any of these files to enable autobind
+ACTION=="add", SUBSYSTEM=="usb", \
+  TEST!="/etc/usbip/autobind-enabled", \
+  TEST!="/run/usbip-autobind-enabled", \
+  TEST!="/tmp/usbip-autobind-enabled", \
+  GOTO="usbip_end"
 
 # Sony DualShock 4
 ACTION=="add", SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", \
