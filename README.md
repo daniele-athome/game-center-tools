@@ -78,7 +78,7 @@ Run `make && sudo make install` to install everything. After that, you can start
 
 The wrapper script will:
 
-* start the `usbip` daemon and try to bind everything configured in the udev rules (whatever it will find connected)
+* start the `usbip` daemon and try to bind anything that is configured in the udev rules (whatever it will find connected)
 * start Moonlight
 * stop `usbip` when Moonlight quits
 
