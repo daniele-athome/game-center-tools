@@ -49,7 +49,7 @@ does the upgrades, then exits - it is intended to be run once at system startup.
 
 ## Moonlight USB/IP integration
 
-Dependencies: `notify-send` (client only), Polkit (client only), `usbip`
+Dependencies: `usbip`, Polkit (client only), `notify-send` (client only, optional) 
 
 This is a set of systemd units, configuration files and script that somewhat integrates Moonlight
 with [USB/IP](https://wiki.archlinux.org/title/USB/IP), which is basically a tool to "forward" USB devices through the network to another host. This has the
