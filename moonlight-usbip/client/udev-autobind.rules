@@ -16,7 +16,6 @@ ACTION!="remove", SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", \
 
 # for some obscure reason, these filters won't work: ENV{USBIP_AUTOBIND}=="1", TAG=="usbip-autobind",
 #ACTION=="remove", SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device",  \
-  RUN+="/usr/bin/touch /tmp/usbip-works"
   #RUN+="/usr/bin/systemctl --no-block stop usbip-bind@$kernel.service"
 
 LABEL="usbip_end"
