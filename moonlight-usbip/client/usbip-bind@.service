@@ -5,11 +5,11 @@ Wants=network-online.target
 Requires=usbipd.service
 
 [Service]
-Type=simple
-EnvironmentFile=/etc/usbip/bind-devices/%i.conf
-ExecStart=/bin/sh -c "/usr/sbin/usbip bind -b $(/usr/sbin/usbip list -p -l | grep '#usbid=${USBIP_DEVICE}#' | cut '-d#' -f1 | cut '-d=' -f2)"
+Type=oneshot
+ExecStart=/usr/sbin/usbip bind -b %i
+ExecStartPost=-/usr/bin/timeout 5 /usr/local/lib/usbip/notify %i
 RemainAfterExit=yes
-ExecStop=/bin/sh -c "/usr/sbin/usbip unbind -b $(/usr/sbin/usbip list -p -l | grep '#usbid=${USBIP_DEVICE}#' | cut '-d#' -f1 | cut '-d=' -f2)"
+ExecStop=-/usr/sbin/usbip unbind -b %i
 Restart=no
 
 [Install]
