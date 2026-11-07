@@ -16,6 +16,7 @@ install:
 	install -m 0644 udev-autobind.rules /etc/udev/rules.d/60-autobind.rules
 	systemctl daemon-reload
 	systemctl restart polkit.service
+	udevadm control --reload-rules && udevadm trigger
 
 uninstall:
 	rm -f /etc/modules-load.d/usbip.conf
@@ -25,3 +26,4 @@ uninstall:
 	rm -f /etc/polkit-1/rules.d/10-usbip-gaming.rules
 	rm -f /etc/udev/rules.d/60-autobind.rules
 	systemctl restart polkit.service
+	udevadm control --reload-rules && udevadm trigger
