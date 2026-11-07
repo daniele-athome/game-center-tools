@@ -9,7 +9,9 @@ install:
 	# no way to do this with a xdg command
 	install -Dm 0644 moonlight-usbip.desktop /usr/local/share/applications/moonlight-usbip.desktop
 	install -m 0755 moonlight-usbip.sh /usr/local/bin/moonlight-usbip
+	install -Dm 0755 usbip-notify.sh /usr/local/lib/usbip/notify
 	install -m 0644 modules-load.conf /etc/modules-load.d/usbip.conf
+	install -Dm 0644 notify.conf /etc/usbip/notify.conf
 	install -m 0644 usbip-rescan.service /etc/systemd/system/usbip-rescan.service
 	install -m 0644 usbipd.service /etc/systemd/system/usbipd.service
 	install -m 0644 usbip-bind@.service /etc/systemd/system/usbip-bind@.service
@@ -20,9 +22,12 @@ install:
 	udevadm control --reload-rules && udevadm trigger
 
 uninstall:
+	rm -fr /usr/local/lib/usbip
+	rm -f /etc/usbip/notify.conf
 	rm -f /etc/modules-load.d/usbip.conf
 	rm -f /etc/systemd/system/usbipd.service
 	rm -f /etc/systemd/system/usbip-bind@.service
+	rm -f /etc/systemd/system/usbip-rescan.service
 	# systemd will realize at next reboot
 	rm -f /etc/polkit-1/rules.d/10-usbip-gaming.rules
 	rm -f /etc/udev/rules.d/60-autobind.rules

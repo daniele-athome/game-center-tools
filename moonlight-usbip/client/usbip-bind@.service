@@ -5,8 +5,9 @@ Wants=network-online.target
 Requires=usbipd.service
 
 [Service]
-Type=simple
+Type=oneshot
 ExecStart=/usr/sbin/usbip bind -b %i
+ExecStartPost=-/usr/bin/timeout 5 /usr/local/lib/usbip/notify %i
 RemainAfterExit=yes
 ExecStop=-/usr/sbin/usbip unbind -b %i
 Restart=no
