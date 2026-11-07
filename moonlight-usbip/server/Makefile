@@ -5,16 +5,14 @@ all:
 
 install:
 	install -m 0644 modules-load.conf /etc/modules-load.d/usbip.conf
-	install -m 0644 usbip@.service /etc/systemd/system/usbip@.service
-	install -Dm 0644 -t /etc/usbip/remote-devices/ remote-devices/*
-	install -m 0644 polkit.rules /etc/polkit-1/rules.d/10-usbip-gaming.rules
+	install -Dm 0755 usbip-receiver.sh /usr/local/lib/usbip/receiver
+	install -m 0644 usbip-receiver.socket /etc/systemd/system/usbip-receiver.socket
+	install -m 0644 usbip-receiver@.service /etc/systemd/system/usbip-receiver@.service
 	systemctl daemon-reload
-	systemctl restart polkit.service
 
 uninstall:
 	rm -f /etc/modules-load.d/usbip.conf
-	rm -f /etc/systemd/system/usbip@.service
-	# systemd will realize at next reboot
-	rm -fr /etc/usbip/remote-devices/
-	rm -f /etc/polkit-1/rules.d/10-usbip-gaming.rules
-	systemctl restart polkit.service
+	rm -fr /usr/local/lib/usbip
+	rm -f /etc/systemd/system/usbip-receiver.socket
+	rm -f /etc/systemd/system/usbip-receiver@.service
+	systemctl daemon-reload

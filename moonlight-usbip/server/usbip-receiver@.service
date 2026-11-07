@@ -1,0 +1,12 @@
+[Unit]
+Description=USB/IP attach receiver for connection %I
+Requires=usbip-receiver.socket
+After=usbip-receiver.socket
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/lib/usbip/receiver
+StandardInput=socket
+StandardOutput=journal
+StandardError=journal
+TimeoutStartSec=30s

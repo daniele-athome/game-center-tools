@@ -1,0 +1,17 @@
+[Unit]
+Description=USB/IP attach receiver
+Documentation=https://github.com/daniele-athome/game-center-tools
+
+[Socket]
+# a bare port listens on every interface: set the LAN address of this system
+# here (e.g. 192.168.1.10:9955) unless the port is firewalled
+ListenStream=9955
+# one service instance per connection, which also sets $REMOTE_ADDR
+Accept=yes
+MaxConnections=4
+MaxConnectionsPerSource=2
+TriggerLimitIntervalSec=10s
+TriggerLimitBurst=20
+
+[Install]
+WantedBy=sockets.target
