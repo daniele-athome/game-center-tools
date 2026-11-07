@@ -20,7 +20,7 @@ notify() {
 
 # shellcheck disable=SC2329
 finish() {
-  rm -f /tmp/usbip-autobind-disabled
+  rm -f /tmp/usbip-autobind-enabled
   systemctl stop usbipd.service
 }
 
