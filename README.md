@@ -99,5 +99,5 @@ The Moonlight system will notify the gaming system to connect back to the client
 connect the controller whenever you like, before or during the stream.
 
 > [!IMPORTANT]
-> The receiver server is unauthenticated, so it's not safe for public exposure. Be sure to keep your system properly
+> **The receiver server is unauthenticated**, so it's not safe for public exposure. Be sure to keep your system properly
 > firewalled or otherwise secure.
