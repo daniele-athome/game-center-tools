@@ -69,20 +69,23 @@ everything. The idea is this:
 
 ### On the Moonlight system (streaming client)
 
-Configuration files exist for the DualShock 4 and DualSense controllers.
+Each device you want to bind requires a new udev rule in `udev-autobind.rules`. Just duplicate an existing one and edit
+`idVendor` and `idProduct` accordingly.
 
 Run `make && sudo make install` to install everything. After that, you can start Moonlight via the wrapper script
 `moonlight-usbip` or via application shortcut "Moonlight USB/IP".
 
 The wrapper script will:
 
-* start the `usbip` daemon and try to bind both the DS4 and the DS5 (whatever it will find connected)
+* start the `usbip` daemon and try to bind everything configured in the udev rules (whatever it will find connected)
 * start Moonlight
 * stop `usbip` when Moonlight quits
 
 Privileged operations (e.g. start `usbip`) will use `systemctl` and should work out-of-the-box if Polkit is installed.
 
 ### On the gaming system (streaming server, e.g. Sunshine)
+
+> I'm currently working on a way to make this step automated, without the need for any configuration. Stay tuned.
 
 Configure the host of your streaming client in all files inside `moonlight-usbip/server/remote-devices`: set the
 `USBIP_HOST` variable.
@@ -91,8 +94,7 @@ Run `make && sudo make install` to install everything.
 
 > [!NOTE]
 > The following command may be configured in Sunshine as preparation steps: the `start` command for the "Do" (mandatory), the `stop` command for the "Undo" (optional).
-> This way the system will be completely automated, as long as you connect the controller before starting Moonlight.  
-> **Anyway for the moment it is not recommended to set the "Undo" command because Proton can't handle controller reconnections due to a bug: https://github.com/ValveSoftware/Proton/issues/7952**
+> This way the system will be completely automated, as long as you connect the controller before starting Moonlight.
 
 Execute this command **after starting Moonlight**:
 
