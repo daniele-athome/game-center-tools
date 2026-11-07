@@ -15,6 +15,7 @@ ACTION!="remove", SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", \
 
 # ENV{USBIP_AUTOBIND}=="1",
 ACTION=="remove", SUBSYSTEM=="usb", TAG=="usbip-autobind", \
-  RUN+="/usr/bin/systemctl --no-block stop usbip-bind@$kernel.service"
+  RUN+="/usr/bin/touch /tmp/usbip-works"
+  #RUN+="/usr/bin/systemctl --no-block stop usbip-bind@$kernel.service"
 
 LABEL="usbip_end"
