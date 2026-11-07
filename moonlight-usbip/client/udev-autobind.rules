@@ -2,12 +2,12 @@
 ACTION=="add|remove", SUBSYSTEM=="usb", TEST=="/etc/usbip/autobind-disabled", GOTO="usbip_end"
 
 # Sony DualShock 4
-ACTION!="remove", SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", \
+ACTION=="add", SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", \
   ATTR{idVendor}=="054c", ATTR{idProduct}=="09cc", \
   ENV{USBIP_AUTOBIND}="1", TAG+="systemd", ENV{SYSTEMD_WANTS}+="usbip-bind@$kernel.service"
 
 # Sony DualShock 5
-ACTION!="remove", SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", \
+ACTION=="add", SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", \
   ATTR{idVendor}=="054c", ATTR{idProduct}=="0ce6", \
   ENV{USBIP_AUTOBIND}="1", TAG+="systemd", ENV{SYSTEMD_WANTS}+="usbip-bind@$kernel.service"
 
