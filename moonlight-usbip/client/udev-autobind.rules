@@ -1,4 +1,4 @@
-# create one of these files to disable autobind
+# create any of these files to disable autobind
 ACTION=="add", SUBSYSTEM=="usb", TEST=="/etc/usbip/autobind-disabled", GOTO="usbip_end"
 ACTION=="add", SUBSYSTEM=="usb", TEST=="/run/usbip-autobind-disabled", GOTO="usbip_end"
 

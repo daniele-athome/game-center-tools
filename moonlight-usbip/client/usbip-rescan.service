@@ -1,0 +1,6 @@
+[Unit]
+Description=Rescan USB devices for usbip binding
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/udevadm trigger --action=add --subsystem-match=usb --property-match=DEVTYPE=usb_device
