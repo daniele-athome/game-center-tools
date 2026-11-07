@@ -69,8 +69,9 @@ everything. The idea is this:
 
 ### On the Moonlight system (streaming client)
 
-Each device you want to bind requires a new udev rule in `udev-autobind.rules`. Rules for DualShock 4 and DualSense are
-provided. If you need a new one, just duplicate an existing one and edit `idVendor` and `idProduct` accordingly.
+Each device you want to bind requires a new udev rule in `udev-autobind.rules`. Rules for DualShock 4 and DualSense
+controllers are provided. If you need a new one, just duplicate an existing one and edit `idVendor` and `idProduct`
+accordingly.
 
 Run `make && sudo make install` to install everything. After that, you can start Moonlight via the wrapper script
 `moonlight-usbip` or via application shortcut "Moonlight USB/IP".
