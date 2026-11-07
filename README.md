@@ -95,9 +95,8 @@ Run `make && sudo make install`, then enable the notification receiver:
 systemctl enable --now usbip-receiver.socket
 ```
 
-The Moonlight system rings the socket and sends the busid of the controller it just bound; the gaming system attaches it
-from the address the connection came from (`$REMOTE_ADDR`), so there is no host, no device list and no Sunshine
-preparation command to configure. Connect the controller whenever you like, before or during the stream.
+The Moonlight system will notify the gaming system to connect back to the client and attach the gamepads. You may
+connect the controller whenever you like, before or during the stream.
 
 > [!IMPORTANT]
 > The receiver server is unauthenticated, so it's not safe for public exposure. Be sure to keep your system properly
