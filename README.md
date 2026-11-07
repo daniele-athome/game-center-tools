@@ -64,8 +64,8 @@ Heavily inspired by the USB/IP Arch wiki page, I tried to streamline the process
 everything. The idea is this:
 
 * connect a controller to your Moonlight system
+* the Moonlight system sends a notification to the gaming system, which attaches the controller
 * start Moonlight via a wrapper script
-* start a service on the server (Sunshine) system to attach the controller
 
 ### On the Moonlight system (streaming client)
 
@@ -84,28 +84,21 @@ The wrapper script will:
 
 Privileged operations (e.g. start `usbip`) will use `systemctl` and should work out-of-the-box if Polkit is installed.
 
+Set `NOTIFY_HOST` in `notify.conf` to the host name or ip of your gaming system, so that it is told to attach the
+controller as soon as it is bound. Leave it empty to disable the notification.
+
 ### On the gaming system (streaming server, e.g. Sunshine)
 
-> I'm currently working on a way to make this step automated, without the need for any configuration. Stay tuned.
-
-Configure the host of your streaming client in all files inside `moonlight-usbip/server/remote-devices`: set the
-`USBIP_HOST` variable.
-
-Run `make && sudo make install` to install everything.
-
-> [!NOTE]
-> The following command may be configured in Sunshine as preparation steps: the `start` command for the "Do" (mandatory), the `stop` command for the "Undo" (optional).
-> This way the system will be completely automated, as long as you connect the controller before starting Moonlight.
-
-Execute this command **after starting Moonlight**:
+Run `make && sudo make install`, then enable the notification receiver:
 
 ```shell
-systemctl start usbip@CONTROLLER.service
+systemctl enable --now usbip-receiver.socket
 ```
 
-Replace `CONTROLLER` with:
+The Moonlight system rings the socket and sends the busid of the controller it just bound; the gaming system attaches it
+from the address the connection came from (`$REMOTE_ADDR`), so there is no host, no device list and no Sunshine
+preparation command to configure. Connect the controller whenever you like, before or during the stream.
 
-* `ds4` if you have a DualShock 4 controller
-* `ds5` if you have a DualSense controller
-
-Privileged operations (i.e. systemctl) should work out-of-the-box if Polkit is installed.
+> [!IMPORTANT]
+> The receiver server is unauthenticated, so it's not safe for public exposure. Be sure to keep your system properly
+> firewalled or otherwise secure.
