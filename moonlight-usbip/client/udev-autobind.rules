@@ -11,11 +11,10 @@ ACTION!="remove", SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", \
 # Sony DualShock 5
 ACTION!="remove", SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", \
   ATTR{idVendor}=="054c", ATTR{idProduct}=="0ce6", \
-  ENV{USBIP_AUTOBIND}="1", TAG+="usbip-autobind", TAG+="systemd", ENV{SYSTEMD_WANTS}+="usbip-bind@$kernel.service", \
-  ENV{REMOVE_CMD}="/usr/bin/touch /tmp/usbip-works"
+  ENV{USBIP_AUTOBIND}="1", TAG+="usbip-autobind", TAG+="systemd", ENV{SYSTEMD_WANTS}+="usbip-bind@$kernel.service"
 
 # for some obscure reason, these filters won't work: ENV{USBIP_AUTOBIND}=="1", TAG=="usbip-autobind",
-#ACTION=="remove", SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device",  \
-  #RUN+="/usr/bin/systemctl --no-block stop usbip-bind@$kernel.service"
+ACTION=="remove", SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device",  \
+  RUN+="/usr/bin/systemctl --no-block stop usbip-bind@$kernel.service"
 
 LABEL="usbip_end"
