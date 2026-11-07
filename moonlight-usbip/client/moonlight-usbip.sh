@@ -20,12 +20,14 @@ notify() {
 
 # shellcheck disable=SC2329
 finish() {
+  touch /tmp/usbip-autobind-disabled
   systemctl stop usbipd.service
 }
 
 if ! start_and_check usbipd.service; then
   notify "Failed to start usbipd. Controllers will not work."
 else
+  rm -f /tmp/usbip-autobind-disabled
   start_and_check usbip-rescan.service || notify "Failed to rescan controllers."
 fi
 
