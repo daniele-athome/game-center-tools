@@ -1,3 +1,5 @@
+KERNEL=="usb[1-2]", TAG+="systemd"
+
 # create this file to disable autobind
 ACTION=="add|remove", SUBSYSTEM=="usb", TEST=="/etc/usbip/autobind-disabled", GOTO="usbip_end"
 
