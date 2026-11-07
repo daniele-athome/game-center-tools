@@ -1,6 +1,7 @@
 [Unit]
 Description=USB-IP Binding for device %I
-After=network-online.target usbipd.service
+BindsTo=dev-bus-usb-%i.device
+After=network-online.target usbipd.service dev-bus-usb-%i.device
 Wants=network-online.target
 Requires=usbipd.service
 
