@@ -1,20 +1,19 @@
-#SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", TAG+="systemd"
-
 # create this file to disable autobind
-SUBSYSTEM=="usb", TEST=="/etc/usbip/autobind-disabled", GOTO="usbip_end"
+ACTION=="add", SUBSYSTEM=="usb", TEST=="/etc/usbip/autobind-disabled", GOTO="usbip_end"
 
 # Sony DualShock 4
-ACTION!="remove", SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", \
+ACTION=="add", SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", \
   ATTR{idVendor}=="054c", ATTR{idProduct}=="09cc", \
-  ENV{USBIP_AUTOBIND}="1", TAG+="usbip-autobind", TAG+="systemd", ENV{SYSTEMD_WANTS}+="usbip-bind@$kernel.service"
+  TAG+="systemd", ENV{SYSTEMD_WANTS}+="usbip-bind@$kernel.service"
 
 # Sony DualShock 5
-ACTION!="remove", SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", \
+ACTION=="add", SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", \
   ATTR{idVendor}=="054c", ATTR{idProduct}=="0ce6", \
-  ENV{USBIP_AUTOBIND}="1", TAG+="usbip-autobind", TAG+="systemd", ENV{SYSTEMD_WANTS}+="usbip-bind@$kernel.service"
-
-# for some obscure reason, these filters won't work: ENV{USBIP_AUTOBIND}=="1", TAG=="usbip-autobind",
-ACTION=="remove", SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device",  \
-  RUN+="/usr/bin/systemctl --no-block stop usbip-bind@$kernel.service"
+  TAG+="systemd", ENV{SYSTEMD_WANTS}+="usbip-bind@$kernel.service"
 
 LABEL="usbip_end"
+
+# for some obscure reason, filters won't work, so we unbind everything that gets disconnected.
+# It is really just to mark the systemd service as stopped
+ACTION=="remove", SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device",  \
+  RUN+="/usr/bin/systemctl --no-block stop usbip-bind@$kernel.service"
