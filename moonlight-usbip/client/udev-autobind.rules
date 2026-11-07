@@ -1,7 +1,7 @@
 #SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", TAG+="systemd"
 
 # create this file to disable autobind
-ACTION=="add|remove", SUBSYSTEM=="usb", TEST=="/etc/usbip/autobind-disabled", GOTO="usbip_end"
+SUBSYSTEM=="usb", TEST=="/etc/usbip/autobind-disabled", GOTO="usbip_end"
 
 # Sony DualShock 4
 ACTION!="remove", SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", \
