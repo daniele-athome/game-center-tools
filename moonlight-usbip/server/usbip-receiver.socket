@@ -1,6 +1,5 @@
 [Unit]
 Description=USB/IP attach receiver
-Documentation=https://github.com/daniele-athome/game-center-tools
 
 [Socket]
 # a bare port listens on every interface: set the LAN address of this system
