@@ -15,4 +15,4 @@ uninstall:
 	rm -fr /usr/local/lib/usbip
 	rm -f /etc/systemd/system/usbip-receiver.socket
 	rm -f /etc/systemd/system/usbip-receiver@.service
-	systemctl daemon-reload
+	# systemd will realize at next reboot
