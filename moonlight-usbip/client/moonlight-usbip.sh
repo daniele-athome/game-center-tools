@@ -27,7 +27,7 @@ finish() {
 if ! start_and_check usbipd.service; then
   notify "Failed to start usbipd. Controllers will not work."
 else
-  touch /tmp/usbip-autobind-enable
+  touch /tmp/usbip-autobind-enabled
   start_and_check usbip-rescan.service || notify "Failed to rescan controllers."
 fi
 
